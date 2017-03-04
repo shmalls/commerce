@@ -1,21 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
-from django.contrib.postgres.search import SearchVector
 from item.models import *
-from .forms import *
+from .forms import SearchForm
 def index(request):
-	if request.method == 'POST':
-		form = SearchForm(request.POST)
-		if form.is_valid():
-			print (form.cleaned_data['search'])
-			items = Item.objects.filter(name__icontains=form.cleaned_data['search'])
-			print (items)
-			return render(request,'search.html',{'items' : items, 'form' : form})
-	else:
-		form = SearchForm();
-	return render(request,"base.html",{'form':form, 'items' : {}})
-
-#def search(request):
-#	if request.method == 'POST':
-#		return HttpResponse("SERCH")
+	form = SearchForm();
+	return render(request,"base.html",{'form':form})

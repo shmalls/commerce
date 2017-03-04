@@ -3,8 +3,7 @@
 <body>
 login
 <h1>Amazing</h1>
-<form method="POST" action=".">
-  {% csrf_token %}
+<form id="searchform" method="get" action="{% url 'search' %}">
   {{form}}
   <input type="submit" value="search">
 </form>
