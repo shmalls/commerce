@@ -11,10 +11,10 @@ def index(request):
 			print (form.cleaned_data['search'])
 			items = Item.objects.filter(name__icontains=form.cleaned_data['search'])
 			print (items)
-			return render_to_response('search.html',{'items' : items})
+			return render(request,'search.html',{'items' : items, 'form' : form})
 	else:
 		form = SearchForm();
-	return render(request,"base.html",{'form':form})
+	return render(request,"base.html",{'form':form, 'items' : {}})
 
 #def search(request):
 #	if request.method == 'POST':

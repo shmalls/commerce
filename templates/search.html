@@ -1,4 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1><a href="">Amazing</a></h1>
+<form method="POST" action=".">
+  {% csrf_token %}
+  {{form}}
+  <input type="submit" value="search">
+</form><br/>
 {% for item in items %}
 {{forloop.counter0|add:1}}&nbsp; :
 <a href="item/{{item.id}}">{{item}}</a>
 {% endfor %}
+</body>
+</html>
