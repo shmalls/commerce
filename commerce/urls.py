@@ -6,6 +6,6 @@ urlpatterns = [
     # url(r'^$', 'commerce.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^polls/', include('polls.urls')),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^item/', include('item.urls')),
+    url(r'^admin/', admin.site.urls),
 ]
