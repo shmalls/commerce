@@ -8,7 +8,8 @@
 </form><br/>
 {% for curItem in items %}
 {{forloop.counter0|add:1}}&nbsp; :
-<a href="{% url 'item' %}?id={{curItem.id | urlencode}}">{{curItem}}</a>
+<a href="{% url 'item' %}?id={{curItem.id | urlencode}}">{{curItem.name}}</a>
+{{curItem.price}}
 {% endfor %}
 </body>
 </html>

@@ -5,5 +5,7 @@
 {{item.name}}
 {{item.seller_name}}
 {{item.price}}
+<br/>
+<a href="{% url 'add' %}?id={{item.id | urlencode}}">add to cart</a>
 </body>
 </html>

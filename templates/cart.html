@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<body>
+{{message}}<br/>
+
+{% for item in cart %}
+{{forloop.counter0|add:1}}&nbsp; :
+<a href="{% url 'item' %}?id={{item.product.id | urlencode}}">{{item.product.name}}</a>
+{{item.quantity}}
+{{item.total_price}}
+<br/>
+{% endfor %}
+</body>
+</html>
