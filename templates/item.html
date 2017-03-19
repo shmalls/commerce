@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html>
 <body>
+<a href="{% url 'cart' %}">cart</a>
 <h1><a href="{% url 'index' %}">Amazing</a></h1>
 {{item.name}}
 {{item.seller_name}}
 {{item.price}}
 <br/>
-<a href="{% url 'add' %}?id={{item.id | urlencode}}">add to cart</a>
+<form id="addform" method="post" action="{% url 'add' %}?id={{item.id | urlencode}}">
+{% csrf_token %}
+<input type="submit" value="add to cart">
+</form>
 </body>
 </html>

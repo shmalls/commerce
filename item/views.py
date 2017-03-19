@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import Item
 from cart.cart import Cart
@@ -13,15 +13,13 @@ def item(request):
 	return HttpResponse("Hello, world. You're at the item index.")
 
 def add_to_cart(request):
-	if request.method == 'GET':
+	if request.method == 'POST':
 		itemId = request.GET.get('id')
-		#cart = request.session.get('cart', {})
 		item = Item.objects.get(pk=itemId)
 		cart = Cart(request)
-		#quant = cart.get('itemId', 0)
-		#cart[itemId] = quant+1
-		#request.session['cart'] = cart
 		cart.add(item, item.price, 1)
-		message = "Added " + item.name + " to cart"
-		return render(request, 'cart.html', {'message' : message, 'cart' : cart})
-	return HttpResponse("bad")
+		#message = "Added " + item.name + " to cart"
+		return redirect('/cart/')
+	#message = ''
+	#cart = Cart(request)
+	#return render(request, 'cart.html', {'message' : message, 'cart' : cart})

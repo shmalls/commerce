@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <body>
+<a href="{% url 'cart' %}">cart</a>
 <h1><a href="{% url 'index' %}">Amazing</a></h1>
 <form id="searchform" method="get" action="{% url 'search' %}">
   {{form}}
   <input type="submit" value="search">
 </form><br/>
-{% for curItem in items %}
+{% for item in items %}
 {{forloop.counter0|add:1}}&nbsp; :
-<a href="{% url 'item' %}?id={{curItem.id | urlencode}}">{{curItem.name}}</a>
-{{curItem.price}}
+<a href="{% url 'item' %}?id={{item.id | urlencode}}">{{item.name}}</a>
+{{item.price}}
 {% endfor %}
 </body>
 </html>

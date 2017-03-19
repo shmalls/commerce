@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <body>
+<h1><a href="{% url 'index' %}">Amazing</a></h1>
 {{message}}<br/>
 
-{% for item in cart %}
-{{forloop.counter0|add:1}}&nbsp; :
-<a href="{% url 'item' %}?id={{item.product.id | urlencode}}">{{item.product.name}}</a>
-{{item.quantity}}
-{{item.total_price}}
-<br/>
-{% endfor %}
+<form action="{% url 'cart' %}" method="post">{% csrf_token %}
+	{{ formset.management_form }}
+	{% for form in formset %}
+		
+		{{forloop.counter0|add:1}}&nbsp; :
+		<a href="{% url 'item' %}?id={{form.initial.itemId | urlencode}}">{{form.initial.name}}</a>
+		{{ form.quantity }}
+		<br>
+	{% endfor %}
+<input type="submit">
+</form>
 </body>
 </html>
