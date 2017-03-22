@@ -5,6 +5,7 @@ class CartForm(forms.Form):
 	itemId = forms.IntegerField(required=False)
 	name = forms.CharField(required=False, max_length=100)
 	quantity = forms.IntegerField()
+	total_price = forms.IntegerField(required=False)
 
 	#def __init__:
 	#	self.fields['itemId'].widget.attrs['readonly'] = True

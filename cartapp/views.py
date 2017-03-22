@@ -8,8 +8,10 @@ from django.forms.formsets import formset_factory
 def cart(request):
 	cart = Cart(request)
 	itemList = []
+	total = 0
 	for item in cart:
 		itemList.append(item)
+		total += item.total_price
 	print(itemList)
 	CartFormSet = formset_factory(CartForm, extra=0)
 	if request.method == "POST":
@@ -24,13 +26,16 @@ def cart(request):
 		else:
 			print (formset.errors)
 		cart = Cart(request)
+		total = 0
+		for item in cart:
+			total += item.total_price
 		formset = CartFormSet(initial=[{'itemId' : item.object_id,
-			'quantity' : item.quantity, 'name' : item.product.name} for item in cart])
+			'quantity' : item.quantity, 'name' : item.product.name, 'total_price' : item.total_price} for item in cart])
 		message = 'Your Cart'
-		return render(request, 'cart.html', {'message' : message, 'cart' : cart, 'formset' : formset})
+		return render(request, 'cart.html', {'message' : message, 'cart' : cart, 'formset' : formset, 'total' : total})
 	else:
 		formset = CartFormSet(initial=[{'itemId' : item.object_id,
-			'quantity' : item.quantity, 'name' : item.product.name} for item in cart])
+			'quantity' : item.quantity, 'name' : item.product.name, 'total_price' : item.total_price} for item in cart])
 		message = 'Your Cart'
 
-	return render(request, 'cart.html', {'message' : message, 'cart' : cart, 'formset' : formset})
+	return render(request, 'cart.html', {'message' : message, 'cart' : cart, 'formset' : formset, 'total' : total})

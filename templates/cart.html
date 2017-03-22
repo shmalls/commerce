@@ -11,9 +11,14 @@
 		{{forloop.counter0|add:1}}&nbsp; :
 		<a href="{% url 'item' %}?id={{form.initial.itemId | urlencode}}">{{form.initial.name}}</a>
 		{{ form.quantity }}
+		${{form.initial.total_price}}
 		<br>
 	{% endfor %}
-<input type="submit">
+	Total: ${{total}}
+	<br>
+<input type="submit" value="Update Cart">
+<br>
+<a href="{% url 'purchase' %}">Checkout</a>
 </form>
 </body>
 </html>

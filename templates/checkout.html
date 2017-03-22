@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1><a href="{% url 'index' %}">Amazing</a></h1>
+
+<form action="{% url 'index' %}" method="post">{% csrf_token %}
+{% for field in ship_form %}
+<p>{{ field.label_tag }} {{ field }}</p>
+{% endfor %}
+<br>
+{% for field in pay_form %}
+<p>{{ field.label_tag }} {{ field }}</p>
+{% endfor %}
+<input type="submit" value="Purchase">
+</form>
+
+</form>
+</body>
+</html>

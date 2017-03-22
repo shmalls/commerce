@@ -11,8 +11,9 @@ urlpatterns = [
     url(r'^item/', include('item.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$', auth_views.logout, name='logout'),
+    url(r'^logout/$', auth_views.logout, {'template_name':'logout.html'}, name='logout'),
     url(r'^$', views.index, name='index'),
     url(r'^search/', include('search.urls')),
+    url(r'^purchase/', include('purchase.urls')),
     url(r'^cart/', include('cartapp.urls')),
 ]
