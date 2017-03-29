@@ -7,7 +7,6 @@ class ShippingForm(forms.Form):
 	address = forms.CharField(label='Address', max_length=100)
 	city = forms.CharField(label='City', max_length=100)
 	state = forms.CharField(label='State', max_length=100)
-	#country = forms.CharField(label='Country', max_length=100)
 	zip_code = forms.CharField(label='Zip', max_length=100)
 
 class PaymentForm(forms.Form):

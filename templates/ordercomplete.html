@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
+<br/>
+<a href="{% url 'cart' %}">cart</a>
+<h1>Amazing</h1>
+Comgratulations on your purchase!
+</form>
+</body>
+</html>
