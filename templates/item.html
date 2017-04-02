@@ -10,6 +10,11 @@
 <form id="addform" method="post" action="{% url 'add' %}?id={{item.id | urlencode}}">
 {% csrf_token %}
 <input type="submit" value="add to cart">
+
+{% for review in reviews %}
+{{review.review}}
+{% endfor %}
+
 </form>
 </body>
 </html>

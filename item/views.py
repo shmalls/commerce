@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Item
+from .models import Item, Review
 from cart.cart import Cart
 from django.shortcuts import get_object_or_404
 
@@ -8,8 +8,12 @@ from django.shortcuts import get_object_or_404
 def item(request):
 	if request.method == 'GET':
 		itemId = request.GET.get('id')
+		try:
+			reviews = Review.objects.get(itemId=itemId)
+		except Review.DoesNotExist:
+			reviews = None
 		item = Item.objects.get(pk=itemId)
-		return render(request, 'item.html', {'item' : item})
+		return render(request, 'item.html', {'item' : item, 'reviews' : reviews})
 	return HttpResponse("Hello, world. You're at the item index.")
 
 def add_to_cart(request):

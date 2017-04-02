@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from cart.cart import Cart
+from django.contrib.auth.decorators import login_required
 from .forms import *
 
 # Create your views here.
