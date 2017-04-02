@@ -1,9 +1,11 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, HttpResponseRedirect
 from django.http import HttpResponse
 from item.models import *
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login as auth_login
-from .forms import SearchForm, LoginForm
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect
+from .forms import SearchForm, LoginForm, RegistrationForm
 
 def index(request):
 	form = SearchForm();
@@ -31,6 +33,7 @@ def login(request):
   })
   return render_to_response("login.html", variables)
 
+@csrf_protect
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -42,7 +45,8 @@ def register(request):
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email']
             )
-            return HttpResponseRedirect('/register/success/')
+            loginform = SearchForm()
+            return render(request, 'base.html',{'form' : loginform})
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {

@@ -1,0 +1,17 @@
+<h2>Register Account </h2>
+
+    {% if form.subject.errors %}
+        <div class="alert alert-danger">
+            <strong>The input you submitted was invalid. Try Again!</strong>
+        </div>
+    {% endif %}
+<form method="post" action=".">{% csrf_token %}
+        <table align="center" border="0">
+        <br>
+        <br>
+            {{ form.as_table }}
+        </table>
+        <br>
+        <input type="submit" value="Register" />
+        <input type="hidden" name="next" value="/home" />
+</form>
