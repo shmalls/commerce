@@ -11,8 +11,24 @@
 {% csrf_token %}
 <input type="submit" value="add to cart">
 
+</form>
+
+<form id="addform" method="post" action="">
+{% csrf_token %}
+
+<br/>
+Submit your review below:
+<br/>
+{{reviewForm}}
+<br/>
+<input type="submit" value="Submit Review">
+{% csrf_token %}
+<br/>
+<br/>
 {% for review in reviews %}
 {{review.review}}
+<br/>
+<br/>
 {% endfor %}
 
 </form>
