@@ -21,17 +21,12 @@ def login(request):
                   auth_login(request, user)
                   form = SearchForm();
                   return render(request, 'base.html',{ 'user': request.user, 'form' : form})
-              else:
-                  return render_to_response('register.html')
-          else:
-              return render_to_response('register.html')
-      else:
-          return render_to_response("login.html", {'form' : form})
+          #not active user, redirect to register
+          form = RegistrationForm()
+          return render(request, 'register.html', {'form' : form})
+  #not post, load login
   form = LoginForm()
-  variables = RequestContext(request, {
-    'form': form
-  })
-  return render_to_response("login.html", variables)
+  return render(request, 'login.html', {'form' : form})
 
 @csrf_protect
 def register(request):
@@ -48,12 +43,6 @@ def register(request):
             loginform = SearchForm()
             return render(request, 'base.html',{'form' : loginform})
     else:
-        form = RegistrationForm()
-    variables = RequestContext(request, {
-    'form': form
-    })
+    	form = RegistrationForm()
 
-    return render_to_response(
-    'register.html',
-    variables,
-    )
+    	return render(request, 'register.html', {'form' : form})
