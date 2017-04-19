@@ -11,6 +11,7 @@
 {{forloop.counter0|add:1}}&nbsp; :
 <a href="{% url 'item' %}?id={{item.id | urlencode}}">{{item.name}}</a>
 {{item.price}}
+<br/>
 {% endfor %}
 </body>
 </html>

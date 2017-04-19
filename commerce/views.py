@@ -40,9 +40,12 @@ def register(request):
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email']
             )
-            loginform = SearchForm()
-            return render(request, 'base.html',{'form' : loginform})
+            form = LoginForm()
+            return render(request, 'login.html',{'form' : form})
+        else:
+        	#user cannot be created
+        	return render(request, 'register.html',{'form' : form})
+    #not post, load register
     else:
     	form = RegistrationForm()
-
     	return render(request, 'register.html', {'form' : form})
