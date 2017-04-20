@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from item.models import Item
+from purchase.choices import *
 
 # Create your models here.
 class Profile(models.Model):
@@ -15,13 +16,18 @@ class Profile(models.Model):
 	zip_code = models.CharField(max_length=100, blank=True)
 	card_number = models.IntegerField(null=True)
 	card_name = models.CharField(max_length=100, blank=True)
-	card_month = models.IntegerField(null=True)
-	card_year = models.IntegerField(null=True)
+	card_month = models.IntegerField(choices=MONTH_CHOICES,default=1)
+	card_year = models.IntegerField(choices=YEAR_CHOICES,default=1)
 
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ['address', 'city', 'state', 'zip_code']
+
+class PaymentForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = ['card_number','card_name','card_month','card_year']
 
 class UserForm(forms.ModelForm):
 	class Meta:

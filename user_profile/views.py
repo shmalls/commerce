@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import *
+from purchase.choices import *
 
 # Create your views here.
 def profile(request):
@@ -21,3 +22,17 @@ def edit_profile(request):
 		top_form.save()
 		bot_form.save()
 		return render(request, 'editprofile.html',{'top_form':top_form, 'bot_form':bot_form})
+
+def view_payment(request):
+	return render(request,'viewpayment.html',{'card_number':request.user.profile.card_number,
+				'name':request.user.profile.card_name,'card_month':MONTH_CHOICES[request.user.profile.card_month][1],
+				'card_year':YEAR_CHOICES[request.user.profile.card_year][1]})
+
+def edit_payment(request):
+	if request.method == 'GET':
+		pay_form = PaymentForm(instance=request.user.profile)
+		return render(request, 'editpayment.html',{'pay_form':pay_form})
+	elif request.method == 'POST':
+		pay_form = PaymentForm(request.POST,instance=request.user.profile)
+		pay_form.save()
+		return render(request, 'editpayment.html',{'pay_form':pay_form})
