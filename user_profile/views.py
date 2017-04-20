@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from django.contrib import messages
 from .models import *
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 from purchase.choices import *
 
 # Create your views here.
@@ -36,3 +39,20 @@ def edit_payment(request):
 		pay_form = PaymentForm(request.POST,instance=request.user.profile)
 		pay_form.save()
 		return render(request, 'editpayment.html',{'pay_form':pay_form})
+
+def change_password(request):
+	message = ""
+	if request.method == 'POST':
+		form = PasswordChangeForm(request.user, request.POST)
+		if form.is_valid():
+			user = form.save()
+			update_session_auth_hash(request, user)  # Important!
+			messages.success(request, 'Your password was successfully updated!')
+			message = "Your password was successfully updated!"
+			return render(request, 'changepassword.html', {'pass_form': form, 'message':message})
+		else:
+			messages.error(request, 'Please correct the error below.')
+			message = "Incorrect password or mismatching passwords"
+	else:
+		form = PasswordChangeForm(request.user)
+	return render(request, 'changepassword.html', {'pass_form': form,'message':message})
