@@ -1,5 +1,7 @@
 from django.db import models
 from django import forms
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 class Item(models.Model):
@@ -13,6 +15,8 @@ class Item(models.Model):
 class Review(models.Model):
 	itemId = models.ForeignKey('Item',on_delete=models.CASCADE)
 	review = models.TextField(max_length=500)
+	user = models.ForeignKey(User,default=1,on_delete=models.CASCADE)
+
 	
 	def counter(low, high):
 		current = low
@@ -25,5 +29,5 @@ class ReviewForm(forms.ModelForm):
 	review = forms.CharField(widget=forms.Textarea, label='')
 	class Meta:
 		model = Review
-		fields = ['itemId', 'review']
-		widgets = {'itemId': forms.HiddenInput()}
+		fields = ['itemId', 'review', 'user']
+		widgets = {'itemId': forms.HiddenInput(), 'user' : forms.HiddenInput()}

@@ -1,6 +1,28 @@
 from django.db import models
 from item.models import Item
 
+#class Profile(models.Model):
+#	user = models.OneToOneField(User,on_delete=models.CASCADE)
+#	address = models.CharField(max_length=100, blank=True)
+#	city = models.CharField(max_length=100, blank=True)
+#	state = models.CharField(max_length=100, blank=True)
+#	zip_code = models.CharField(max_length=100, blank=True)
+#	card_number = models.IntegerField(blank=True)
+#	card_name = models.CharField(max_length=100, blank=True)
+#	card_month = models.IntegerField(blank=True)
+#	card_year = models.IntegerField(blank=True)
+#
+#@receiver(post_save, sender=User)
+#def create_user_profile(sender, instance, created, **kwargs):
+#    if created:
+#        Profile.objects.create(user=instance)
+#        print('created profile')
+#
+#@receiver(post_save, sender=User)
+#def save_user_profile(sender, instance, **kwargs):
+#    instance.profile.save()
+#    print('saved profile')
+
 # Create your models here.
 #class Cart(models.Model):
 #	user = models.ForeignKey(User)

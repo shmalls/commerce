@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, HttpResponseRedirect
+from django.shortcuts import render, render_to_response, redirect, HttpResponseRedirect
 from django.http import HttpResponse
 from item.models import *
 from django.template import RequestContext
@@ -6,10 +6,10 @@ from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from .forms import SearchForm, LoginForm, RegistrationForm
+from user_profile.models import Profile
 
 def index(request):
-	form = SearchForm();
-	return render(request,"base.html",{'form':form})
+  return render(request,"base.html",{'form':SearchForm()})
 
 def login(request):
   if request.method == 'POST':
@@ -23,7 +23,7 @@ def login(request):
                   return render(request, 'base.html',{ 'user': request.user, 'form' : form})
           #not active user, redirect to register
           form = RegistrationForm()
-          return render(request, 'register.html', {'form' : form})
+          return redirect('/register/')
   #not post, load login
   form = LoginForm()
   return render(request, 'login.html', {'form' : form})
@@ -40,8 +40,8 @@ def register(request):
             password=form.cleaned_data['password1'],
             email=form.cleaned_data['email']
             )
-            form = LoginForm()
-            return render(request, 'login.html',{'form' : form})
+            user.save()
+            return redirect('/login/')
         else:
         	#user cannot be created
         	return render(request, 'register.html',{'form' : form})

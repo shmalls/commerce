@@ -15,7 +15,7 @@ def item(request):
 			reviews = None
 		item = Item.objects.get(pk=itemId)
 		
-		reviewForm = ReviewForm(initial={'itemId':itemId})
+		reviewForm = ReviewForm(initial={'itemId':itemId, 'user':request.user})
 		
 		return render(request, 'item.html', {'item' : item, 'reviews' : reviews, 'reviewForm' : reviewForm})
 		
@@ -49,6 +49,7 @@ def add_to_cart(request):
 def add_review(request):
 	if request.method == 'POST':
 		itemId = request.GET.get('id')
+		user = request.user
 		reviewForm = ReviewForm(request.POST)
 		
 		new_review = reviewForm.save()

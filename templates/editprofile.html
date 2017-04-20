@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h1><a href="{% url 'index' %}">Amazing</a></h1>
+
+<form action="{% url 'edit_profile' %}" method="post">{% csrf_token %}
+{% for field in top_form %}
+<p>{{ field.label_tag }} {{ field }}</p>
+{% endfor %}
+{% for field in bot_form %}
+<p>{{ field.label_tag }} {{ field }}</p>
+{% endfor %}
+<br>
+<input type="submit" value="Submit">
+</form>
+
+</form>
+</body>
+</html>

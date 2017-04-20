@@ -2,7 +2,7 @@
 <html>
 <body>
 {% if user.is_authenticated %}
-      Hi {{ user.username }}!
+	  <a href="{% url 'profile' %}">{{user.username}}</a>
       <a href="{% url 'logout' %}">logout</a>
     {% else %}
       <a href="{% url 'login' %}">login</a>
