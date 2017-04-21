@@ -17,7 +17,7 @@ def item(request):
 		
 		reviewForm = ReviewForm(initial={'itemId':itemId, 'user':request.user})
 		
-		return render(request, 'item.html', {'item' : item, 'reviews' : reviews, 'reviewForm' : reviewForm})
+		return render(request, 'item.html', {'item' : item, 'reviews' : reviews, 'reviewForm' : reviewForm, 'user':request.user})
 		
 	elif request.method == 'POST':
 		itemId = request.GET.get('id')

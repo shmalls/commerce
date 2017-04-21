@@ -15,7 +15,7 @@
 
 <form id="addform" method="post" action="">
 {% csrf_token %}
-
+{% if user.is_authenticated %}
 <br/>
 Submit your review below:
 <br/>
@@ -24,6 +24,7 @@ Submit your review below:
 <input type="submit" value="Submit Review">
 {% csrf_token %}
 <br/>
+{% endif %}
 <br/>
 {% for review in reviews %}
 {{review.user}}:
