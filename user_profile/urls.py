@@ -9,5 +9,9 @@ urlpatterns = [
 	url(r'^view-payment$', views.view_payment, name='view_payment'),
 	url(r'^edit-payment$', views.edit_payment, name='edit_payment'),
 	url(r'^change-password$', views.change_password, name='change_password'),
+	url(r'^view-orders$', views.view_orders, name='view_orders'),
+	url(r'^order/$', views.order, name='order'),
+
+
 
 ]

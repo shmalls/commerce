@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-{% if user.is_authenticated %}
-      Hi {{ user.username }}!
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">login</a>
-    {% endif %}
-<br/>
-<a href="{% url 'cart' %}">cart</a>
 <h1><a href="{% url 'index' %}">Amazing</a></h1>
-Congratulations on your purchase!
+
 <p>--------------------------------------</p>
 <p>order number: {{order.pk}}</p>
 <p>purchase date: {{order.purchase_date}}</p>
@@ -28,6 +20,11 @@ Congratulations on your purchase!
 <p>Quantity: {{item.quantity}}</p>
 <p>Subtotal: ${{item.total}}</p>
 {% endfor %}
+
+<p><a href="{% url 'view_orders' %}">Back to orders</a></p>
+
+
+
 </form>
 </body>
 </html>

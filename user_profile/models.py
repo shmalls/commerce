@@ -48,6 +48,9 @@ class ItemOrder(models.Model):
 	quantity = models.IntegerField()
 	orderId = models.ForeignKey('Order',on_delete=models.CASCADE)
 
+	def total(self):
+		return self.quantity * self.itemId.price
+
 class Order(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	purchase_date = models.DateField(auto_now_add=True)

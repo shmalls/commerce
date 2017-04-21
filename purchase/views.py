@@ -42,4 +42,5 @@ def purchase(request):
 					quantity=item.quantity,
 					orderId=order)
 			cart.new(request)
-			return render(request, 'ordercomplete.html' , {})
+			items = ItemOrder.objects.filter(orderId=order.pk)
+			return render(request, 'ordercomplete.html' , {'order':order,'items':items})

@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html>
 <body>
-{% if user.is_authenticated %}
-      Hi {{ user.username }}!
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">login</a>
-    {% endif %}
-<br/>
-<a href="{% url 'cart' %}">cart</a>
 <h1><a href="{% url 'index' %}">Amazing</a></h1>
-Congratulations on your purchase!
+
+{% for order in orders %}
 <p>--------------------------------------</p>
 <p>order number: {{order.pk}}</p>
 <p>purchase date: {{order.purchase_date}}</p>
@@ -21,13 +14,9 @@ Congratulations on your purchase!
 <p>card number: {{order.card_number}}</p>
 <p>card name: {{order.card_name}}</p>
 <p>card expiration: {{order.card_month}}/{{order.card_year}}</p>
-<p>--------------------------------------</p>
-{% for item in items %}
-<p>Item name: {{item.itemId.name}}</p>
-<p>Price: {{item.itemId.price}}</p>
-<p>Quantity: {{item.quantity}}</p>
-<p>Subtotal: ${{item.total}}</p>
+<a href="{% url 'order' %}?id={{order.pk | urlencode}}">View Order</a><p>--------------------------------------</p>
 {% endfor %}
+
 </form>
 </body>
 </html>

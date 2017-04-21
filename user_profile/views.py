@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import operator
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.forms import PasswordChangeForm
@@ -56,3 +57,15 @@ def change_password(request):
 	else:
 		form = PasswordChangeForm(request.user)
 	return render(request, 'changepassword.html', {'pass_form': form,'message':message})
+
+def view_orders(request):
+	orders = Order.objects.filter(user=request.user)
+	orders = sorted(orders, key=operator.attrgetter('pk'), reverse=True)
+	return render(request, 'vieworders.html', {'orders':orders})
+
+def order(request):
+	if request.method == 'GET':
+		orderId = request.GET.get('id')
+		order = Order.objects.get(pk=orderId)
+		items = ItemOrder.objects.filter(orderId=orderId)
+		return render(request, 'order.html', {'order':order,'items':items})
