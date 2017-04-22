@@ -1,7 +1,10 @@
 from django.conf.urls import include, url
+from django.conf import settings
 from django.contrib import admin
 from commerce import views
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     # Examples:
@@ -19,3 +22,6 @@ urlpatterns = [
     url(r'^purchase/', include('purchase.urls')),
     url(r'^cart/', include('cartapp.urls')),
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

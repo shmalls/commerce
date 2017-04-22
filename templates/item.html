@@ -8,6 +8,16 @@
 tr.bordered {
     border-bottom: 10px solid #000;
 }
+.container {
+    width: 200px;
+    height: 120px;
+}
+
+/* resize images */
+.container img {
+    width: 100%;
+    height: auto;
+}
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -114,21 +124,10 @@ tr.bordered {
 
   <div class="jumbotron">
     <div class="container text-center">
-      <table class="center" style="border-collapse: separate; border-spacing: 10px;">
-        <tr>
-          <th>Item Name</th>
-          <td>{{item.name}}</td>
-        </tr>
-        <tr>
-          <th>Price</th>
-          <td>{{item.price}}</td>
-        </tr>
-        <tr>
-       	  <td><form id="addform" method="post" action="{% url 'add' %}?id={{item.id | urlencode}}">{% csrf_token %}
-          <input class="btn btn-default" type="submit" value="add to cart"></form></td>
-        </tr>
-      </table>
-      <form id="addform" method="post" action="">
+      <div class="col-md-4">
+        <img src="{{item.image.url}}">
+        <br>
+        <form id="addform" method="post" action="">
       {% csrf_token %}
       {% if user.is_authenticated %}
       <br/>
@@ -154,12 +153,37 @@ tr.bordered {
         <tr class="bordered"></tr>
         {% endfor %}
       </table>
-
-    </div>
-    <hr>
+      </div>
+      <div class="col-md-4">
+        <table class="center" style="border-collapse: separate; border-spacing: 10px;">
+        <tr>
+          <th>Item Name</th>
+        </tr>
+        <tr><td>{{item.name}}</td></tr>
+        <tr>
+          <th>Price</th>
+        </tr>
+        <tr><td>${{item.price|floatformat:2|intcomma}}</td></tr>
+        <tr>
+          <th>Description</th>
+        </tr>
+        <tr><td>{{item.description}}</td></tr>
+      </table>
+      <br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br>
+      <hr>
     <footer>
       <p>Amazing! &copy; 2017 Company, Inc.</p>
     </footer>
+      </div>
+      <div class="col-md-4">
+      <form id="addform" method="post" action="{% url 'add' %}?id={{item.id | urlencode}}">{% csrf_token %}
+          <input class="btn btn-success" type="submit" value="add to cart"></form>
+      </div>
+
+    </div>
+    <br><br><br><br><br><br><br><br>
   </div> <!-- /container -->
 
 
