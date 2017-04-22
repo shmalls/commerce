@@ -19,6 +19,9 @@ class Profile(models.Model):
 	card_month = models.IntegerField(choices=MONTH_CHOICES,default=1)
 	card_year = models.IntegerField(choices=YEAR_CHOICES,default=1)
 
+	def getCardNumber(self):
+		return str(self.card_number)[-4:].rjust(len(str(self.card_number)), "*")
+
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
@@ -28,6 +31,7 @@ class PaymentForm(forms.ModelForm):
 	class Meta:
 		model = Profile
 		fields = ['card_number','card_name','card_month','card_year']
+		labels = {'card_month':'Expiration Month','card_year':"Expiration Year"}
 
 class UserForm(forms.ModelForm):
 	class Meta:
@@ -62,3 +66,6 @@ class Order(models.Model):
 	card_name = models.CharField(max_length=100, blank=True)
 	card_month = models.IntegerField(null=True)
 	card_year = models.IntegerField(null=True)
+
+	def getCardNumber(self):
+		return str(self.card_number)[-4:].rjust(len(str(self.card_number)), "*")

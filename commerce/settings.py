@@ -25,7 +25,7 @@ SECRET_KEY = 'w&rz3$9w2%!i-ox8zx16$kg&2wb8zr%74%lib9+4t072(sj%(3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['amazing.pythonanywhere.com']
+ALLOWED_HOSTS = ['amazing.pythonanywhere.com', 'localhost']
 
 
 # Application definition
@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -105,4 +106,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.abspath('../commerce/static')
 LOGIN_REDIRECT_URL = 'index'

@@ -1,30 +1,196 @@
+{% load staticfiles %}
+{% load humanize %}
+<style type="text/css">
+ table.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
 <!DOCTYPE html>
-<html>
-<body>
-<h1><a href="{% url 'index' %}">Amazing</a></h1>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
 
-<p>--------------------------------------</p>
-<p>order number: {{order.pk}}</p>
-<p>purchase date: {{order.purchase_date}}</p>
-<p>address: {{order.address}}</p>
-<p>city: {{order.city}}</p>
-<p>state: {{order.state}}</p>
-<p>zip code: {{order.zip_code}}</p>
-<p>card number: {{order.card_number}}</p>
-<p>card name: {{order.card_name}}</p>
-<p>card expiration: {{order.card_month}}/{{order.card_year}}</p>
-<p>--------------------------------------</p>
-{% for item in items %}
-<p>Item name: {{item.itemId.name}}</p>
-<p>Price: {{item.itemId.price}}</p>
-<p>Quantity: {{item.quantity}}</p>
-<p>Subtotal: ${{item.total}}</p>
-{% endfor %}
+    <title>Amazing!</title>
 
-<p><a href="{% url 'view_orders' %}">Back to orders</a></p>
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+      <font size = "18">Amazing</font>
+      </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <form method="POST" action="{}">
+              <div class="form-group">
+
+                {% if user.is_authenticated %}
+                  <table>
+                    <tr>
+                      <td><a class="navbar-brand text-center" href="{% url 'profile' %}">Welcome {{ user.username }}!</a></td>
+                      <td><a class="btn btn-success" href="{% url 'profile' %}" role="button">Profile</a></td>
+                      <td>&nbsp;</td>    
+                      <td> <a class="btn btn-success" href="{% url 'logout' %}" role="button">Logout</a></td>
+                      <td>&nbsp;</td>
+                      <td> <a class="btn btn-success" href="{% url 'cart' %}" role="button">Cart</a></td>
+                    </tr>
+                  </table>
+                {% else %}
+                  <a class="btn btn-success" href="{% url 'login' %}" role="button">Sign In</a>
+                {% endif %}
+              </div><!--/.navbar-collapse -->
+            </form>
+          </form>
+      </div>
+    </nav>
 
 
+  <div class="SearchColumn">
+    <br>
+    <br>
+    <div class="container text-center">
+      <br>
+      <h1>Order Details</h1>
+      <br>
+    </div>
+  </div>
 
-</form>
-</body>
+  <div class="jumbotron">
+    <div class="container text-center">
+      <table class="center" style="border-collapse: separate; border-spacing: 10px;">
+        <tr>
+          <th>Order Number</th>
+          <td>{{order.pk}}</td>
+        </tr>
+        <tr>
+          <th>Purchase Date</th>
+          <td>{{order.purchase_date}}</td>
+        </tr>
+        <tr>
+          <th>Shipping Address</th>
+          <td>{{order.address}}</td>
+        </tr>
+        <tr>
+          <th>City</th>
+          <td>{{order.city}}</td>
+        </tr>
+        <tr>
+          <th>State</th>
+          <td>{{order.state}}</td>
+        </tr>
+        <tr>
+          <th>Zip Code</th>
+          <td>{{order.zip_code}}</td>
+        </tr>
+        <tr>
+          <th>Card Number</th>
+          <td>{{order.getCardNumber}}</td>
+        </tr>
+        <tr>
+          <th>Name on Card</th>
+          <td>{{order.card_name}}</td>
+        </tr>
+        <tr>
+          <th>Card Expiration</th>
+          <td>{{card_month}}/{{card_year}}</td>
+        </tr>
+        <tr></tr><tr></tr>
+        <tr>
+          <th>Itemized Receipt</th>
+          <td>
+        </tr>
+        <tr></tr>
+        {% for item in items %}
+		<tr>
+		   <th>Item name</th>
+		   <td>{{item.itemId.name}}</td>
+		</tr>
+		<tr>
+		   <th>Price</th>
+		   <td>${{item.itemId.price|floatformat:2|intcomma}}</td>
+		</tr>
+		<tr>
+		   <th>Quantity</th>
+		   <td>{{item.quantity}}</td>
+		</tr>
+		<tr>
+		   <th>Subtotal</th>
+		   <td>${{item.total|floatformat:2|intcomma}}</td>
+		</tr>
+		{% endfor %}
+		<tr></tr><tr></tr>
+		<tr>
+		   <th>Total</th>
+		   <td>${{total|floatformat:2|intcomma}}
+		</tr>
+        <tr>
+          <td><a href="{% url 'view_orders' %}">Back to Orders</a></td>
+          <td></td>
+        </tr>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+      </table>
+    </div>
+    <hr>
+    <footer>
+      <p>Amazing! &copy; 2017 Company, Inc.</p>
+    </footer>
+  </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
 </html>

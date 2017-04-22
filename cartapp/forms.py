@@ -1,10 +1,12 @@
+from django.db import models
 from django import forms
 from django.forms.formsets import BaseFormSet
+
 
 class CartForm(forms.Form):
 	itemId = forms.IntegerField(required=False)
 	name = forms.CharField(required=False, max_length=100)
-	quantity = forms.IntegerField()
+	quantity = forms.IntegerField(min_value=0,widget=forms.NumberInput(attrs={'style':'width:6ch'}))
 	total_price = forms.IntegerField(required=False)
 
 	#def __init__:

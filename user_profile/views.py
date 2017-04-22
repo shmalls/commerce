@@ -8,13 +8,18 @@ from purchase.choices import *
 
 # Create your views here.
 def profile(request):
-	return render(request, 'profile.html', {})
+	return render(request, 'profile2.html', {})
 
 def view_profile(request):
-	return render(request,'viewprofile.html',{'first_name':request.user.first_name,
-		'last_name':request.user.last_name,'address':request.user.profile.address,
-				'city':request.user.profile.city,'state':request.user.profile.state,
-				'zip_code':request.user.profile.zip_code})
+	return render(request,'viewprofile.html',{
+		'first_name':request.user.first_name,
+		'last_name':request.user.last_name,
+		'address':request.user.profile.address,
+		'city':request.user.profile.city,
+		'state':request.user.profile.state,
+		'zip_code':request.user.profile.zip_code,
+		'email':request.user.email,
+		})
 def edit_profile(request):
 	if request.method == 'GET':
 		top_form = UserForm(instance=request.user)
@@ -28,9 +33,13 @@ def edit_profile(request):
 		return render(request, 'editprofile.html',{'top_form':top_form, 'bot_form':bot_form})
 
 def view_payment(request):
-	return render(request,'viewpayment.html',{'card_number':request.user.profile.card_number,
-				'name':request.user.profile.card_name,'card_month':MONTH_CHOICES[request.user.profile.card_month][1],
-				'card_year':YEAR_CHOICES[request.user.profile.card_year][1]})
+	return render(request,'viewpayment.html',{
+		'card_number':request.user.profile.card_number,
+		'name':request.user.profile.card_name,
+		'card_month':MONTH_CHOICES[request.user.profile.card_month][1],
+		'card_year':YEAR_CHOICES[request.user.profile.card_year][1],
+		'user':request.user,
+		})
 
 def edit_payment(request):
 	if request.method == 'GET':
@@ -53,7 +62,7 @@ def change_password(request):
 			return render(request, 'changepassword.html', {'pass_form': form, 'message':message})
 		else:
 			messages.error(request, 'Please correct the error below.')
-			message = "Incorrect password or mismatching passwords"
+			message = "Incorrect or mismatching passwords"
 	else:
 		form = PasswordChangeForm(request.user)
 	return render(request, 'changepassword.html', {'pass_form': form,'message':message})
@@ -68,4 +77,13 @@ def order(request):
 		orderId = request.GET.get('id')
 		order = Order.objects.get(pk=orderId)
 		items = ItemOrder.objects.filter(orderId=orderId)
-		return render(request, 'order.html', {'order':order,'items':items})
+		total = 0
+		for item in items:
+			total += item.total()
+		return render(request, 'order.html', {
+			'order':order,
+			'items':items,
+			'card_month':MONTH_CHOICES[order.card_month][1],
+			'card_year':YEAR_CHOICES[order.card_year][1],
+			'total':total,
+			})

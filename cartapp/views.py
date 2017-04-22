@@ -14,12 +14,13 @@ def cart(request):
 		total += item.total_price
 	print(itemList)
 	CartFormSet = formset_factory(CartForm, extra=0)
-	if request.method == "POST":
+	if request.method == "POST" and len(itemList) > 0:
 		formset = CartFormSet(request.POST)
 
 		if(formset.is_valid()):
 			index = 0
 			for form in formset:
+				print("index",index)
 				item = Item.objects.get(pk=itemList[index].object_id)
 				cart.update(item,form.cleaned_data['quantity'],itemList[index].unit_price)
 				index += 1
