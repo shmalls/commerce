@@ -5,6 +5,9 @@
     margin-left: auto;
     margin-right: auto;
 }
+tr.bordered {
+    border-bottom: 10px solid #000;
+}
 </style>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -121,10 +124,37 @@
           <td>{{item.price}}</td>
         </tr>
         <tr>
-       	   <td><form id="addform" method="post" action="{% url 'add' %}?id={{item.id | urlencode}}">
-{% csrf_token %}
-<input class="btn btn-default" type="submit" value="add to cart"></form></td>
+       	  <td><form id="addform" method="post" action="{% url 'add' %}?id={{item.id | urlencode}}">{% csrf_token %}
+          <input class="btn btn-default" type="submit" value="add to cart"></form></td>
+        </tr>
       </table>
+      <form id="addform" method="post" action="">
+      {% csrf_token %}
+      {% if user.is_authenticated %}
+      <br/>
+      Submit your review below:
+      <br/>
+      {{reviewForm}}
+      <br/>
+      <input type="submit" value="Submit Review">
+      </form>
+      <br/>
+      {% endif %}
+      <br/>
+      <table align="left" style="border-collapse: separate; border-spacing: 10px;">
+        {% for review in reviews %}
+        <tr>
+          <th>Author</th>
+          <td>{{review.user}}</td>
+        </tr>
+        <tr>
+          <th>Review</th>
+          <td>{{review.review}}</td>
+        </tr>
+        <tr class="bordered"></tr>
+        {% endfor %}
+      </table>
+
     </div>
     <hr>
     <footer>
