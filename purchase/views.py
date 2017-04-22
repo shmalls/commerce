@@ -7,9 +7,9 @@ from .forms import *
 
 # Create your views here.
 def purchase(request):
+	cart = Cart(request)
 	if request.method == 'GET':
 		if request.user.is_authenticated():
-			cart = Cart(request)
 			ship_form = ShippingForm(initial={'first_name':request.user.first_name,
 				'last_name':request.user.last_name,'address':request.user.profile.address,
 				'city':request.user.profile.city,'state':request.user.profile.state,
@@ -20,8 +20,9 @@ def purchase(request):
 			return render(request, 'checkout.html', {'ship_form' : ship_form, 'pay_form' : pay_form})
 		else:
 			return redirect('/login/')
-	if request.method == 'POST':
+	if request.method == 'POST' and cart.count() > 0:
 		ship_form = ShippingForm(request.POST)
+		total = 0
 		pay_form = PaymentForm(request.POST)
 		cart = Cart(request)
 		if ship_form.is_valid() and pay_form.is_valid() and request.user.is_authenticated():
@@ -41,6 +42,16 @@ def purchase(request):
 					itemId=Item.objects.get(pk=item.object_id),
 					quantity=item.quantity,
 					orderId=order)
+				total += itemOrder.total()
 			cart.new(request)
+			print("Ocm",order.card_month)
 			items = ItemOrder.objects.filter(orderId=order.pk)
-			return render(request, 'ordercomplete.html' , {'order':order,'items':items})
+			return render(request, 'ordercomplete.html' , {
+				'order':order,
+				'items':items,
+				'card_month':MONTH_CHOICES[int(order.card_month)][1],
+				'card_year':YEAR_CHOICES[int(order.card_year)][1],
+				'total':total,
+				})
+	else:
+		return redirect('index')

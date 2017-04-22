@@ -77,10 +77,20 @@
                       <td> <a class="btn btn-success" href="{% url 'logout' %}" role="button">Logout</a></td>
                       <td>&nbsp;</td>
                       <td> <a class="btn btn-success" href="{% url 'cart' %}" role="button">Cart</a></td>
+                      <td></td>
                     </tr>
                   </table>
                 {% else %}
-                  <a class="btn btn-success" href="{% url 'login' %}" role="button">Sign In</a>
+                  <table>
+                    <tr>
+                    <td><a class="btn btn-success" href="{% url 'login' %}" role="button">Sign In</a></td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-success" href="{% url 'register' %}" role="button">Register</a></td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-success" href="{% url 'cart' %}" role="button">Cart</a></td>
+                    <td></td>
+                    </tr>
+                  </table>
                 {% endif %}
               </div><!--/.navbar-collapse -->
             </form>

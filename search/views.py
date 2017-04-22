@@ -12,6 +12,7 @@ def search(request):
   cart = Cart(request)
   search = request.GET.get('search')
   items = Item.objects.filter(name__icontains=search)
+  numResults = len(items)
   itemList = []
   total = 0
   for item in cart:
@@ -45,6 +46,7 @@ def search(request):
       'user' : request.user,
       'items' : items,
       'search' : search,
+      'numResults' : numResults,
       })
   else:
     formset = CartFormSet(initial=[{'itemId' : item.object_id,
@@ -58,6 +60,7 @@ def search(request):
   	'user' : request.user,
   	'items' : items,
   	'search' : search,
+    'numResults' : numResults,
   	})
 
 #	form = SearchForm();

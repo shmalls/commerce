@@ -61,10 +61,10 @@ def login(request):
               if user.is_active:
                   auth_login(request, user)
                   form = SearchForm();
-                  return render(request, 'base.html',{ 'user': request.user, 'form' : form})
+                  return redirect('index')
           #not active user, redirect to register
           form = RegistrationForm()
-          return redirect('/register/')
+          return redirect('register')
   #not post, load login
   form = LoginForm()
   return render(request, 'login.html', {'form' : form})

@@ -1,17 +1,143 @@
-<h2>Register Account </h2>
+{% load staticfiles %}
+{% load humanize %}
+<style type="text/css">
+ table.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Amazing!</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+      <font size = "18">Amazing</font>
+      </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <form method="POST" action="{}">
+              <div class="form-group">
+
+                {% if user.is_authenticated %}
+                  <table>
+                    <tr>
+                      <td><a class="navbar-brand text-center" href="{% url 'profile' %}">Welcome {{ user.username }}!</a></td>
+                      <td><a class="btn btn-success" href="{% url 'profile' %}" role="button">Profile</a></td>
+                      <td>&nbsp;</td>    
+                      <td> <a class="btn btn-success" href="{% url 'logout' %}" role="button">Logout</a></td>
+                      <td>&nbsp;</td>
+                      <td> <a class="btn btn-success" href="{% url 'cart' %}" role="button">Cart</a></td>
+                    </tr>
+                  </table>
+                {% else %}
+                  <table>
+                    <tr>
+                    <td><a class="btn btn-success" href="{% url 'login' %}" role="button">Sign In</a></td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-success" href="{% url 'register' %}" role="button">Register</a></td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-success" href="{% url 'cart' %}" role="button">Cart</a></td>
+                    <td></td>
+                    </tr>
+                  </table>
+                {% endif %}
+              </div><!--/.navbar-collapse -->
+            </form>
+          </form>
+      </div>
+    </nav>
+
+
+  <div class="SearchColumn">
+    <br>
+    <br>
+    <div class="container text-center">
+      <br>
+      <h1>Register</h1>
+      <br>
+    </div>
+  </div>
+
+  <div class="jumbotron">
+    <div class="container text-center">
     {% if form.subject.errors %}
         <div class="alert alert-danger">
             <strong>The input you submitted was invalid. Try Again!</strong>
         </div>
     {% endif %}
-<form method="post" action=".">{% csrf_token %}
-        <table align="center" border="0">
-        <br>
-        <br>
-            {{ form.as_table }}
-        </table>
-        <br>
-        <input type="submit" value="Register" />
-        <input type="hidden" name="next" value="/home" />
-</form>
+      <form method="post">
+    {% csrf_token %}
+    <table class="center" style="border-collapse: separate; border-spacing: 10px;">
+    {{ form.as_table }}
+    </table>
+    <input class="btn btn-default" type="submit" value="Register"/>
+  </form>
+    </div>
+    <hr>
+    <footer>
+      <p>Amazing! &copy; 2017 Company, Inc.</p>
+    </footer>
+  </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>

@@ -81,7 +81,16 @@
                     </tr>
                   </table>
                 {% else %}
-                  <a class="btn btn-success" href="{% url 'login' %}" role="button">Sign In</a>
+                  <table>
+                    <tr>
+                    <td><a class="btn btn-success" href="{% url 'login' %}" role="button">Sign In</a></td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-success" href="{% url 'register' %}" role="button">Register</a></td>
+                    <td>&nbsp;</td>
+                    <td><a class="btn btn-success" href="{% url 'cart' %}" role="button">Cart</a></td>
+                    <td></td>
+                    </tr>
+                  </table>
                 {% endif %}
               </div><!--/.navbar-collapse -->
             </form>
@@ -111,6 +120,9 @@
           {{s_form}}
           <input type="submit" value="search">
         </form><br>
+        {% if numResults == 0 %}
+        <p>No results.</p>
+        {% else %}
         <table class="center" style="border-collapse: separate; border-spacing: 10px;">
           <tr>
             <th></th>
@@ -126,6 +138,7 @@
           </tr>
         {% endfor %}
         </table>
+        {% endif %}
       </div>
       <div class="col-md-4">
         {% if user.is_authenticated %}
