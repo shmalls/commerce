@@ -27,3 +27,12 @@ YEAR_CHOICES = (
     (11, ("2027")),
     (12, ("2028")),
 )
+
+DEPT_CHOICES = (
+    (1, ("Home & Kitchen")),
+    (2, ("Health & Household")),
+    (3, ("Electronics")),
+    (4, ("Clothing, Shoes & Jewelry")),
+    (5, ("Grocery & Gourmet Food")),
+    (6, ("Computers & Accessories")),
+)

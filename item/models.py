@@ -2,6 +2,7 @@ from django.db import models
 from django import forms
 from django.contrib.auth.models import User
 import os
+from purchase.choices import *
 
 
 # Create your models here.
@@ -11,6 +12,7 @@ class Item(models.Model):
 	price = models.FloatField()
 	description = models.TextField(max_length=500)
 	image = models.ImageField(blank=True, null=True)
+	department = models.IntegerField(choices=DEPT_CHOICES,default=1)
 
 
 	def __str__(self):
