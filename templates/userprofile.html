@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+{% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
+<br/>
+<a href="{% url 'cart' %}">cart</a>
+<br/>
+<a href="{% url 'userprofile' %}">userprofile</a>
+<h1>Amazing</h1>
+<form id="searchform" method="get" action="{% url 'search' %}">
+  {{form}}
+  <input type="submit" value="search">
+<h2>TEST</h2>
+</body>
+</html>
